@@ -1,19 +1,18 @@
-export function getTipos() {
+import PokemonModel from "../model/pokemon.model";
+
+export async function getTipos() {
     return ["Steel", "Eletric", "Water"];
 }
 
-export function getMeusPokemons() {
-    return {
-        nome: "Pikachu",
-        tipo: "Eletrico"
-    },
-    {
-        nome: "Squirtle",
-        tipo: "Aquatico"
-    };
+export async function getMeusPokemons() {
+    var pokemons = await PokemonModel.find().lean();
+    console.log(pokemons);
+    return pokemons;
 }
 
-export function salvarPokemon(pokemon) {
+export async function salvarPokemon(pokemon) {
+    var createdPokemon = new PokemonModel(pokemon);
+    await createdPokemon.save();
     console.log(pokemon);
-    return "Esse método ainda será implementado com o salvamento do pokemon no banco de dados";
+    return "Salvou com sucesso";
 }

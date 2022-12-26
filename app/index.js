@@ -2,13 +2,16 @@ import express from 'express';
 import addControllers from "./setup/addControllers";
 import addMiddlewares from "./setup/addMiddlewares";
 
-const app_express = express();
+const app = express();
 
-addMiddlewares(app_express); // DEVE SER ADICIONANDO ANTES DOS CONTROLLERS
-addControllers(app_express);
+addMiddlewares(app); // DEVE SER ADICIONANDO ANTES DOS CONTROLLERS
+addControllers(app);
 
-app_express.listen(3000, () => {
+app.listen(3000, () => {
     console.log("A API ESTÁ RODANDO NA PORTA 3000");
 });
+
+
+
 
 

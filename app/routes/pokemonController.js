@@ -1,18 +1,42 @@
 import { getTipos, getMeusPokemons, salvarPokemon } from "../services/pokemonService";
+import { connect, disconnect } from '../services/connectionService';
 
-export default (app) => {
+export default function (app) {
     app.get("/tipos", (req, res) => {
         var tipos = getTipos();
         res.json(tipos);
     });
 
-    app.post("/pokemon", (req, res) => {
-        var pokemonSalvo = salvarPokemon(req.body);
-        res.json(pokemonSalvo);
+    app.post("/pokemon", async (req, res) => {
+
+        try {
+            await connect();
+
+            var pokemonSalvo = await salvarPokemon(req.body);
+            res.json(pokemonSalvo);
+
+        } catch (error) {
+            console.error(error);
+            throw new Error('Ocorreuum erro na criacao do pokemon');
+        } finally{
+            disconnect();
+        }
     });
 
-    app.get("/meuspokemons", (req, res) => {
-        var meusPokemons = getMeusPokemons();
-        res.json(meusPokemons);
+    app.get("/meuspokemons", async (req, res) => {
+
+        try {
+            await connect();
+
+            var tipos = await getMeusPokemons();
+            res.json(tipos);
+
+        } catch (error) {
+            console.error(error);
+            throw new Error('Ocorreuum erro na listagem de pokemon');
+        } finally{
+            disconnect();
+        }
     });
+
 }
