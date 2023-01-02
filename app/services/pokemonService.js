@@ -6,7 +6,6 @@ export async function getTipos() {
 
 export async function getMeusPokemons() {
     var pokemons = await PokemonModel.find().lean();
-    console.log(pokemons);
     return pokemons;
 }
 
