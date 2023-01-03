@@ -1,7 +1,13 @@
 import PokemonModel from "../model/pokemon.model";
+import TipoModel from "../model/tipo.model";
 
 export async function getTipos() {
-    return ["Steel", "Eletric", "Water"];
+    var tipos = await TipoModel.find().lean();
+    console.log(tipos);
+    var tiposResult = tipos.map(function (tipo) {
+        return tipo.nome;
+    })
+    return tiposResult;
 }
 
 export async function getMeusPokemons() {

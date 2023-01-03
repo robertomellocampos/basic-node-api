@@ -2,9 +2,20 @@ import { getTipos, getMeusPokemons, salvarPokemon } from "../services/pokemonSer
 import { connect, disconnect } from '../services/connectionService';
 
 export default function (app) {
-    app.get("/tipos", (req, res) => {
-        var tipos = getTipos();
-        res.json(tipos);
+    app.get("/tipos", async (req, res) => {
+         try {
+            await connect();
+
+            var tipos = await getTipos();
+            res.json(tipos);
+
+        } catch (error) {
+            console.error(error);
+            throw new Error('Ocorreuum erro na listagem de tipos');
+        } finally {
+
+            disconnect();
+        }
     });
 
     app.post("/pokemon", async (req, res) => {
@@ -18,7 +29,7 @@ export default function (app) {
         } catch (error) {
             console.error(error);
             throw new Error('Ocorreuum erro na criacao do pokemon');
-        } finally{
+        } finally {
             disconnect();
         }
     });
@@ -34,7 +45,7 @@ export default function (app) {
         } catch (error) {
             console.error(error);
             throw new Error('Ocorreuum erro na listagem de pokemon');
-        } finally{
+        } finally {
             disconnect();
         }
     });

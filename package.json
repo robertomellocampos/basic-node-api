@@ -2,16 +2,10 @@
   "name": "minha-api",
   "version": "1.0.0",
   "description": "descricao teste",
-  "nodemonConfig": {
-    "ignore": [
-      "**/test/**",
-      "**/docs/**"
-    ],
-    "delay": 2500
-  },
   "scripts": {
-    "build": "babel app -d dist",
-    "start": "npm run build && nodemon dist/index.js --watch app",
+    "build": "rimraf ./dist && npx babel ./app --out-dir ./dist",
+    "start": "nodemon dist/index.js",
+    "dev": "npm run build & npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -27,6 +21,7 @@
     "@babel/cli": "^7.19.3",
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "rimraf": "^3.0.2"
   }
 }
